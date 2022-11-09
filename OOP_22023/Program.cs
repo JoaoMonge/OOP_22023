@@ -8,38 +8,28 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-app.MapGet("/", () => Results.Extensions.HtmlResponse(@$"<!doctype html>
-<html>
-    <head><title>miniHTML</title></head>
-    <body>
-        <h1>Hello World</h1>
-        <a href='/curso'>Goto curso</a>
-        <p>The time on the server is {DateTime.Now:O}</p>
-    </body>
-</html>"));
-app.MapGet("/curso", () => "22023");
+Fruta banana = new Fruta("banana", "amarelo", 1.4);
+Fruta morango = new Fruta("morango", "vermelho", 3.5);
+Fruta maca = new Fruta("maca", "verde", 1.2);
+
+app.MapGet("/", () => "Hello 22023");
+app.MapGet("/ufcd", () => "3935");
+app.MapGet("/morango", () => morango.cor);
 
 app.Run();
 
-static class CustomResultExtensions
-{
-    public static IResult HtmlResponse(this IResultExtensions extensions, string html)
-    {
-        return new CusomtHTMLResult(html);
-    }
-}
 
-class CusomtHTMLResult : IResult
+class Fruta
 {
-    private readonly string _htmlContent;
-    public CusomtHTMLResult(string htmlContent)
+    //Encapsulamento que serve para proteger as variáveis de acessos indevidos
+    public string nome;
+    public string cor;
+    public double precoKg;
+
+    public Fruta(string nome,string cor,double precoKg)
     {
-        _htmlContent = htmlContent;
-    }
-    public async Task ExecuteAsync(HttpContext httpContext)
-    {
-        httpContext.Response.ContentType = MediaTypeNames.Text.Html;
-        httpContext.Response.ContentLength = Encoding.UTF8.GetByteCount(_htmlContent);
-        await httpContext.Response.WriteAsync(_htmlContent);
+        this.nome = nome;
+        this.cor = cor;
+        this.precoKg = precoKg;
     }
 }
