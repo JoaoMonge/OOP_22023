@@ -2,6 +2,7 @@
 var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
+app.MapGet("/curso", () => "O curso atual é o 3935.");
 
 app.Run();
 
