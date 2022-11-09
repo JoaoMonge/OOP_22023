@@ -21,9 +21,10 @@ app.MapGet("/", () => "Hello 22023");
 app.MapGet("/ufcd", () => "3935");
 app.MapGet("/morango", () => morango.calcularPreco(0.200));
 app.MapGet("/banana", () => banana.toString());
-app.MapGet("/end", () => nome.EndsWith("a"));
-
+app.MapGet("/end/{letra}", (string letra) => nome.EndsWith(letra));
+app.MapGet("/morango/{tipo}",(string tipo) => tipo=="cor" ? morango.cor : morango.nome);
 app.Run();
+
 
 
 class Fruta
